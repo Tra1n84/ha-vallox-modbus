@@ -94,6 +94,10 @@ of your Home Assistant configuration and restart Home Assistant.
 Each unit ID on a serial port can be added once. Several units on one bus get
 one entry each and share the serial connection.
 
+If the unit is currently set up through the YAML `modbus:` integration,
+disable that hub first: the integration refuses a serial port that a YAML hub
+uses.
+
 To change the settings later, open the entry and choose **Reconfigure**.
 
 ## Entities
@@ -151,6 +155,11 @@ registers fail to answer, only the affected entities become unavailable.
 - **Serial port in use**: another integration uses the same serial port with
   different settings. All Modbus devices on one bus must use the same baud
   rate, parity and stop bits.
+- **Serial port used by a YAML Modbus hub**: a hub under `modbus:` in
+  `configuration.yaml` opens the serial port on its own, and two Modbus
+  masters on one port interfere with each other. The integration therefore
+  refuses that port. Comment out the hub, restart Home Assistant and add or
+  reload the entry. To go back to YAML, delete the entry first.
 - For details, enable debug logging for the integration and download the
   diagnostics of the entry. Diagnostics contain the raw register values but
   not the serial port path.

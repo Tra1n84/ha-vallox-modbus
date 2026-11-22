@@ -1,0 +1,16 @@
+{
+  "domain": "vallox_modbus",
+  "name": "Vallox Modbus",
+  "categories": ["climate.fans_ventilation"],
+  "codeowners": ["@Tra1n84"],
+  "config_flow": true,
+  "connectivity": ["modbus"],
+  "dependencies": ["modbus", "usb"],
+  "documentation": "https://github.com/Tra1n84/ha-vallox-modbus",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Tra1n84/ha-vallox-modbus/issues",
+  "loggers": ["modbus_connection", "vallox_modbus"],
+  "requirements": ["vallox-modbus==0.2.0"],
+  "version": "0.1.0"
+}
