@@ -1,0 +1,204 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This Vallox unit is already configured.",
+      "reconfigure_successful": "Re-configuration was successful"
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "device_in_use": "The serial port is already in use with different settings.",
+      "not_vallox": "The unit answered, but not like a Vallox MV unit. Check the unit ID.",
+      "unknown": "Unexpected error",
+      "yaml_hub_in_use": "The serial port is used by the Modbus hub \"{hub}\" configured in YAML. Disable that hub first: two Modbus masters on one serial port interfere with each other."
+    },
+    "step": {
+      "reconfigure": {
+        "data": {
+          "baudrate": "Baud rate",
+          "device": "Serial port",
+          "parity": "Parity",
+          "stopbits": "Stop bits",
+          "unit_id": "Modbus unit ID"
+        },
+        "data_description": {
+          "baudrate": "Modbus speed configured on the Vallox unit (default 19200).",
+          "device": "Serial port of the RS485 adapter connected to the Vallox unit.",
+          "parity": "Parity configured on the Vallox unit (default even).",
+          "stopbits": "Stop bits configured on the Vallox unit (default 1).",
+          "unit_id": "Modbus address configured on the Vallox unit (default 1)."
+        },
+        "description": "Change the serial settings or the Modbus unit ID of the Vallox unit."
+      },
+      "user": {
+        "data": {
+          "baudrate": "Baud rate",
+          "device": "Serial port",
+          "parity": "Parity",
+          "stopbits": "Stop bits",
+          "unit_id": "Modbus unit ID"
+        },
+        "data_description": {
+          "baudrate": "Modbus speed configured on the Vallox unit (default 19200).",
+          "device": "Serial port of the RS485 adapter connected to the Vallox unit.",
+          "parity": "Parity configured on the Vallox unit (default even).",
+          "stopbits": "Stop bits configured on the Vallox unit (default 1).",
+          "unit_id": "Modbus address configured on the Vallox unit (default 1)."
+        },
+        "description": "Connect a Vallox MV unit over Modbus RTU. The settings must match the Modbus settings of the unit; the connection uses 8 data bits."
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "defrosting": {
+        "name": "Defrosting"
+      },
+      "fault": {
+        "name": "Fault"
+      }
+    },
+    "fan": {
+      "ventilation": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "away": "Away",
+              "boost": "Boost",
+              "extra": "Extra",
+              "fireplace": "Fireplace / Custom",
+              "home": "Home"
+            }
+          }
+        }
+      }
+    },
+    "number": {
+      "boost_duration": {
+        "name": "Boost duration"
+      },
+      "extra_duration": {
+        "name": "Extra duration"
+      },
+      "extra_extract_fan": {
+        "name": "Extract fan speed (Extra)"
+      },
+      "extra_supply_fan": {
+        "name": "Supply fan speed (Extra)"
+      },
+      "fan_speed_away": {
+        "name": "Fan speed (Away)"
+      },
+      "fan_speed_boost": {
+        "name": "Fan speed (Boost)"
+      },
+      "fan_speed_home": {
+        "name": "Fan speed (Home)"
+      },
+      "fireplace_duration": {
+        "name": "Fireplace duration"
+      },
+      "supply_air_target_away": {
+        "name": "Supply air temperature (Away)"
+      },
+      "supply_air_target_boost": {
+        "name": "Supply air temperature (Boost)"
+      },
+      "supply_air_target_extra": {
+        "name": "Supply air temperature (Extra)"
+      },
+      "supply_air_target_home": {
+        "name": "Supply air temperature (Home)"
+      }
+    },
+    "sensor": {
+      "cell_state": {
+        "name": "Cell state",
+        "state": {
+          "bypass": "Bypass",
+          "cool_recovery": "Cool recovery",
+          "defrosting": "Defrosting",
+          "heat_recovery": "Heat recovery"
+        }
+      },
+      "current_profile": {
+        "name": "Current profile",
+        "state": {
+          "auto": "Auto",
+          "away": "Away",
+          "boost": "Boost",
+          "extra": "Extra",
+          "fireplace": "Fireplace / Custom",
+          "home": "Home"
+        }
+      },
+      "exhaust_air": {
+        "name": "Exhaust air"
+      },
+      "extract_air": {
+        "name": "Extract air"
+      },
+      "extract_fan_speed": {
+        "name": "Extract fan speed"
+      },
+      "fan_speed": {
+        "name": "Fan speed"
+      },
+      "filter_remaining": {
+        "name": "Filter time remaining"
+      },
+      "optional_air": {
+        "name": "Optional air"
+      },
+      "outdoor_air": {
+        "name": "Outdoor air"
+      },
+      "profile_duration": {
+        "name": "Profile duration"
+      },
+      "remaining_time_for_filter": {
+        "name": "Remaining time for filter"
+      },
+      "supply_air": {
+        "name": "Supply air"
+      },
+      "supply_cell_air": {
+        "name": "Supply cell air"
+      },
+      "supply_fan_speed": {
+        "name": "Supply fan speed"
+      }
+    }
+  },
+  "exceptions": {
+    "connect_failed": {
+      "message": "Failed to set up the Modbus connection: {error}"
+    },
+    "invalid_input": {
+      "message": "Invalid value for the Vallox unit: {error}"
+    },
+    "partial_write": {
+      "message": "The profile change was interrupted and may be partially applied: {error}"
+    },
+    "preset_without_fan_speed": {
+      "message": "The {preset_mode} preset has no fan speed setting"
+    },
+    "update_failed": {
+      "message": "Error communicating with the Vallox unit: {error}"
+    },
+    "write_failed": {
+      "message": "Failed to write to the Vallox unit: {error}"
+    },
+    "yaml_hub_in_use": {
+      "message": "The serial port is used by the Modbus hub \"{hub}\" configured in YAML. Disable that hub, then reload this entry."
+    }
+  },
+  "selector": {
+    "parity": {
+      "options": {
+        "even": "Even",
+        "none": "None",
+        "odd": "Odd"
+      }
+    }
+  }
+}

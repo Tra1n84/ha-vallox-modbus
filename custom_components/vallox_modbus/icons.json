@@ -1,0 +1,73 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "defrosting": {
+        "default": "mdi:snowflake-melt"
+      }
+    },
+    "fan": {
+      "ventilation": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "away": "mdi:home-export-outline",
+              "boost": "mdi:fan-plus",
+              "extra": "mdi:fan-clock",
+              "fireplace": "mdi:fireplace",
+              "home": "mdi:home"
+            }
+          }
+        }
+      }
+    },
+    "number": {
+      "boost_duration": {
+        "default": "mdi:timer-outline"
+      },
+      "extra_duration": {
+        "default": "mdi:timer-outline"
+      },
+      "extra_extract_fan": {
+        "default": "mdi:fan"
+      },
+      "extra_supply_fan": {
+        "default": "mdi:fan"
+      },
+      "fan_speed_away": {
+        "default": "mdi:fan"
+      },
+      "fan_speed_boost": {
+        "default": "mdi:fan"
+      },
+      "fan_speed_home": {
+        "default": "mdi:fan"
+      },
+      "fireplace_duration": {
+        "default": "mdi:timer-outline"
+      }
+    },
+    "sensor": {
+      "cell_state": {
+        "default": "mdi:swap-horizontal-bold"
+      },
+      "current_profile": {
+        "default": "mdi:gauge"
+      },
+      "extract_fan_speed": {
+        "default": "mdi:fan"
+      },
+      "fan_speed": {
+        "default": "mdi:fan"
+      },
+      "filter_remaining": {
+        "default": "mdi:air-filter"
+      },
+      "remaining_time_for_filter": {
+        "default": "mdi:air-filter"
+      },
+      "supply_fan_speed": {
+        "default": "mdi:fan"
+      }
+    }
+  }
+}

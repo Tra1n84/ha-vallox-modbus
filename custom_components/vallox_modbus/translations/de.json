@@ -1,0 +1,204 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Dieses Vallox-Gerät ist bereits eingerichtet.",
+      "reconfigure_successful": "Die Neukonfiguration war erfolgreich"
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "device_in_use": "Der serielle Port wird bereits mit anderen Einstellungen verwendet.",
+      "not_vallox": "Das Gerät antwortet, aber nicht wie ein Vallox-MV-Gerät. Bitte die Unit-ID prüfen.",
+      "unknown": "Unerwarteter Fehler",
+      "yaml_hub_in_use": "Der serielle Port wird vom in YAML konfigurierten Modbus-Hub \"{hub}\" verwendet. Deaktiviere zuerst diesen Hub: Zwei Modbus-Master an einem seriellen Port stören sich gegenseitig."
+    },
+    "step": {
+      "reconfigure": {
+        "data": {
+          "baudrate": "Baudrate",
+          "device": "Serieller Port",
+          "parity": "Parität",
+          "stopbits": "Stoppbits",
+          "unit_id": "Modbus-Unit-ID"
+        },
+        "data_description": {
+          "baudrate": "Am Vallox-Gerät eingestellte Modbus-Geschwindigkeit (Standard 19200).",
+          "device": "Serieller Port des RS485-Adapters, der mit dem Vallox-Gerät verbunden ist.",
+          "parity": "Am Vallox-Gerät eingestellte Parität (Standard gerade).",
+          "stopbits": "Am Vallox-Gerät eingestellte Stoppbits (Standard 1).",
+          "unit_id": "Am Vallox-Gerät eingestellte Modbus-Adresse (Standard 1)."
+        },
+        "description": "Serielle Einstellungen oder Modbus-Unit-ID des Vallox-Geräts ändern."
+      },
+      "user": {
+        "data": {
+          "baudrate": "Baudrate",
+          "device": "Serieller Port",
+          "parity": "Parität",
+          "stopbits": "Stoppbits",
+          "unit_id": "Modbus-Unit-ID"
+        },
+        "data_description": {
+          "baudrate": "Am Vallox-Gerät eingestellte Modbus-Geschwindigkeit (Standard 19200).",
+          "device": "Serieller Port des RS485-Adapters, der mit dem Vallox-Gerät verbunden ist.",
+          "parity": "Am Vallox-Gerät eingestellte Parität (Standard gerade).",
+          "stopbits": "Am Vallox-Gerät eingestellte Stoppbits (Standard 1).",
+          "unit_id": "Am Vallox-Gerät eingestellte Modbus-Adresse (Standard 1)."
+        },
+        "description": "Ein Vallox-MV-Gerät über Modbus RTU verbinden. Die Werte müssen zu den Modbus-Einstellungen des Geräts passen; die Verbindung nutzt 8 Datenbits."
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "defrosting": {
+        "name": "Abtauen"
+      },
+      "fault": {
+        "name": "Störung"
+      }
+    },
+    "fan": {
+      "ventilation": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "away": "Abwesend",
+              "boost": "Boost",
+              "extra": "Extra",
+              "fireplace": "Kamin / Benutzerdefiniert",
+              "home": "Zuhause"
+            }
+          }
+        }
+      }
+    },
+    "number": {
+      "boost_duration": {
+        "name": "Boost-Dauer"
+      },
+      "extra_duration": {
+        "name": "Extra-Dauer"
+      },
+      "extra_extract_fan": {
+        "name": "Abluftventilator (Extra)"
+      },
+      "extra_supply_fan": {
+        "name": "Zuluftventilator (Extra)"
+      },
+      "fan_speed_away": {
+        "name": "Lüfterstufe (Abwesend)"
+      },
+      "fan_speed_boost": {
+        "name": "Lüfterstufe (Boost)"
+      },
+      "fan_speed_home": {
+        "name": "Lüfterstufe (Zuhause)"
+      },
+      "fireplace_duration": {
+        "name": "Kamin-Dauer"
+      },
+      "supply_air_target_away": {
+        "name": "Zulufttemperatur (Abwesend)"
+      },
+      "supply_air_target_boost": {
+        "name": "Zulufttemperatur (Boost)"
+      },
+      "supply_air_target_extra": {
+        "name": "Zulufttemperatur (Extra)"
+      },
+      "supply_air_target_home": {
+        "name": "Zulufttemperatur (zuhause)"
+      }
+    },
+    "sensor": {
+      "cell_state": {
+        "name": "Zustand der Zelle",
+        "state": {
+          "bypass": "Bypass",
+          "cool_recovery": "Kälterückgewinnung",
+          "defrosting": "Abtauen",
+          "heat_recovery": "Wärmerückgewinnung"
+        }
+      },
+      "current_profile": {
+        "name": "Aktuelles Profil",
+        "state": {
+          "auto": "Automatisch",
+          "away": "Abwesend",
+          "boost": "Boost",
+          "extra": "Extra",
+          "fireplace": "Kamin / Benutzerdefiniert",
+          "home": "Zuhause"
+        }
+      },
+      "exhaust_air": {
+        "name": "Fortluft"
+      },
+      "extract_air": {
+        "name": "Abluft"
+      },
+      "extract_fan_speed": {
+        "name": "Drehzahl des Abluftventilators"
+      },
+      "fan_speed": {
+        "name": "Ventilatordrehzahl"
+      },
+      "filter_remaining": {
+        "name": "Verbleibende Filterzeit"
+      },
+      "optional_air": {
+        "name": "Optionale Luft"
+      },
+      "outdoor_air": {
+        "name": "Außenluft"
+      },
+      "profile_duration": {
+        "name": "Profildauer"
+      },
+      "remaining_time_for_filter": {
+        "name": "Verbleibende Zeit für den Filter"
+      },
+      "supply_air": {
+        "name": "Zuluft"
+      },
+      "supply_cell_air": {
+        "name": "Zuluft der Zelle"
+      },
+      "supply_fan_speed": {
+        "name": "Drehzahl des Zuluftventilators"
+      }
+    }
+  },
+  "exceptions": {
+    "connect_failed": {
+      "message": "Die Modbus-Verbindung konnte nicht eingerichtet werden: {error}"
+    },
+    "invalid_input": {
+      "message": "Ungültiger Wert für das Vallox-Gerät: {error}"
+    },
+    "partial_write": {
+      "message": "Der Profilwechsel wurde unterbrochen und ist eventuell nur teilweise übernommen: {error}"
+    },
+    "preset_without_fan_speed": {
+      "message": "Das Preset {preset_mode} hat keine einstellbare Lüfterstufe"
+    },
+    "update_failed": {
+      "message": "Fehler bei der Kommunikation mit dem Vallox-Gerät: {error}"
+    },
+    "write_failed": {
+      "message": "Schreiben auf das Vallox-Gerät fehlgeschlagen: {error}"
+    },
+    "yaml_hub_in_use": {
+      "message": "Der serielle Port wird vom in YAML konfigurierten Modbus-Hub \"{hub}\" verwendet. Deaktiviere den Hub und lade diesen Eintrag dann neu."
+    }
+  },
+  "selector": {
+    "parity": {
+      "options": {
+        "even": "Gerade",
+        "none": "Keine",
+        "odd": "Ungerade"
+      }
+    }
+  }
+}
