@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Set up the development environment.
+#
+# Google Cloud Shell has little space in $HOME, so the uv cache lives in /tmp.
+# The cache sits on a different filesystem than the virtual environment, so uv
+# copies instead of hard-linking. The Home Assistant test environment in .venv
+# needs about 800 MB.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+export UV_CACHE_DIR="${UV_CACHE_DIR:-/tmp/uv-cache}"
+export UV_LINK_MODE="${UV_LINK_MODE:-copy}"
+
+uv python install 3.14
+uv sync --python 3.14
+
+echo
+echo "Environment ready. Use the same variables for later uv commands:"
+echo "  export UV_CACHE_DIR=${UV_CACHE_DIR} UV_LINK_MODE=${UV_LINK_MODE}"
+echo "  uv run pytest"

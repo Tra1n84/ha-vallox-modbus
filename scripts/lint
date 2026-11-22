@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Format and lint the code.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+export UV_CACHE_DIR="${UV_CACHE_DIR:-/tmp/uv-cache}"
+export UV_LINK_MODE="${UV_LINK_MODE:-copy}"
+
+uv run ruff format .
+uv run ruff check . --fix

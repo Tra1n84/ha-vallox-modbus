@@ -1,0 +1,78 @@
+[project]
+name = "ha-vallox-modbus"
+version = "0.1.0"
+description = "Home Assistant custom integration for Vallox MV ventilation units over Modbus RTU"
+readme = "README.md"
+requires-python = ">=3.14.2"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = []
+
+[dependency-groups]
+dev = [
+    # Pins Home Assistant 2026.10.4 and its test helpers.
+    "pytest-homeassistant-custom-component==0.13.375",
+    # Requirement of custom_components/vallox_modbus/manifest.json.
+    "vallox-modbus==0.2.0",
+    # Requirements of the core modbus and usb integrations in Home Assistant
+    # 2026.10.4. Tests skip installing manifest requirements, so they are
+    # listed here.
+    "modbus-connection[tmodbus]==4.12.4",
+    "pymodbus==3.13.1",
+    "tmodbus==0.6.2",
+    "aiousbwatcher==1.1.2",
+    "serialx==1.11.0",
+    "ruff>=0.15",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["custom_components"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN401", # Dynamically typed expressions (typing.Any) are disallowed
+    "ARG001", # Home Assistant callbacks have fixed signatures
+    "COM812", # Incompatible with the formatter
+    "CPY001", # No copyright header per file
+    "D203", # Incompatible with D211
+    "D213", # Home Assistant puts the docstring summary on the first line
+    "FBT003", # The library takes plain booleans, e.g. async_set_power(True)
+    "ISC001", # Incompatible with the formatter
+    "PLR0913", # Coordinators and tests take many arguments
+    "PLR0917", # Coordinators and tests take many arguments
+    "RUF012", # Home Assistant entities use mutable _attr_* class defaults
+    "TC", # Home Assistant resolves annotations at runtime
+]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+known-first-party = ["homeassistant"]
+known-third-party = ["vallox_modbus"]
+combine-as-imports = true
+split-on-trailing-comma = false
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = [
+    "PLR2004", # Magic values are fine in assertions
+    "S101", # Assertions are the point of tests
+    "SLF001", # Tests may inspect private members
+]
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true

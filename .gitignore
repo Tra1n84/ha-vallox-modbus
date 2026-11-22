@@ -1,0 +1,12 @@
+/.venv/
+/.uv-cache/
+/.ruff_cache/
+/.pytest_cache/
+/.coverage
+/coverage.xml
+__pycache__/
+*.py[cod]
+
+# Home Assistant development configuration
+/config/*
+!/config/configuration.yaml

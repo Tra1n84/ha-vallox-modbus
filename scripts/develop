@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Run Home Assistant with this integration for local development.
+#
+# Never point the integration at a real unit unless that is intended: the
+# config flow probes the serial port you enter.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+export UV_CACHE_DIR="${UV_CACHE_DIR:-/tmp/uv-cache}"
+export UV_LINK_MODE="${UV_LINK_MODE:-copy}"
+
+if [[ ! -d "${PWD}/config" ]]; then
+    mkdir -p "${PWD}/config"
+fi
+
+# Load custom_components/ from the repository root without symlinks.
+export PYTHONPATH="${PYTHONPATH:-}:${PWD}"
+
+uv run hass --config "${PWD}/config" --debug

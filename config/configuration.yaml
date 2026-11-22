@@ -1,0 +1,12 @@
+# Development configuration for scripts/develop.
+default_config:
+
+homeassistant:
+  debug: true
+
+logger:
+  default: info
+  logs:
+    custom_components.vallox_modbus: debug
+    vallox_modbus: debug
+    modbus_connection: debug
