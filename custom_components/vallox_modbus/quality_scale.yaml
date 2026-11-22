@@ -6,9 +6,7 @@ rules:
     status: exempt
     comment: This integration does not register any service actions.
   appropriate-polling: done
-  brands:
-    status: todo
-    comment: brand/icon.png is still missing.
+  brands: done
   common-modules: done
   config-flow: done
   config-flow-test-coverage: done
