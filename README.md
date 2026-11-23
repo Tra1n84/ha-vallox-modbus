@@ -104,7 +104,7 @@ To change the settings later, open the entry and choose **Reconfigure**.
 
 | Platform | Entities |
 | --- | --- |
-| Fan | Ventilation: on/off, profile speed in percent, presets Home, Away, Boost, Fireplace, Extra |
+| Fan | Ventilation: on/off, profile speed in percent, presets Home, Away, Boost, Fireplace, Extra, Auto |
 | Sensor | Extract, exhaust, outdoor, supply and supply cell air temperature; humidity; current profile; fan speed; cell state; profile duration; remaining time for filter; filter time remaining |
 | Sensor (disabled by default) | Optional air temperature, CO2, extract and supply fan speed in RPM |
 | Binary sensor | Defrosting, Fault |
@@ -136,10 +136,10 @@ registers fail to answer, only the affected entities become unavailable.
   in a row (profile, timers and, for timed profiles, the timer switch). This
   sequence is implemented according to the Vallox Modbus manual but not yet
   validated on hardware. If a write fails halfway, Home Assistant reports an
-  error and reads the state again.
-- **No Auto preset.** The Automatic profile is not documented in the Vallox
-  Modbus manual. The *Current profile* sensor shows it when the unit reports
-  it, but the fan cannot select it.
+  error and reads the state again. The Auto preset is validated on hardware.
+- **No fan speed in Auto.** The Automatic profile has no fan speed setting, so
+  the fan shows no percentage and rejects setting one while Auto is active. The
+  *Fan speed* sensor shows the actual speed.
 - **Not available over Modbus**, compared with the core integration: the
   extract efficiency sensor, the post-heater binary sensor, the bypass lock
   switch, a writable filter change date, the profile actions, and device

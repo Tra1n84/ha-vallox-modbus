@@ -45,20 +45,20 @@ READINGS_COMPONENTS: Final = (
 SETTINGS_COMPONENTS: Final = ("settings", "configuration")
 
 # Preset modes that can be selected on the fan, as in the core vallox
-# integration. Automatic is left out: register 4609 = 2 is not documented in
-# the Vallox Modbus manual and has not been validated on hardware.
+# integration. Automatic is register 4609 = 2, listed in the register table of
+# the Vallox Modbus manual D5269 and validated on hardware.
 PRESET_MODE_TO_PROFILE: Final = {
     "home": Profile.HOME,
     "away": Profile.AWAY,
     "boost": Profile.BOOST,
     "fireplace": Profile.FIREPLACE,
     "extra": Profile.EXTRA,
+    "auto": Profile.AUTOMATIC,
 }
 
 # Every profile the unit can report, named as in the core vallox integration.
 PROFILE_TO_PRESET_MODE: Final = {
-    **{profile: preset for preset, profile in PRESET_MODE_TO_PROFILE.items()},
-    Profile.AUTOMATIC: "auto",
+    profile: preset for preset, profile in PRESET_MODE_TO_PROFILE.items()
 }
 
 CELL_STATE_TO_STR: Final = {
