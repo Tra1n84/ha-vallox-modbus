@@ -64,6 +64,7 @@ async def test_state(hass: HomeAssistant, entity_registry: er.EntityRegistry) ->
         "boost",
         "fireplace",
         "extra",
+        "auto",
     ]
     assert state.attributes[ATTR_PERCENTAGE] == 60
     assert state.attributes["fan_speed_home"] == 60
@@ -81,8 +82,8 @@ async def test_state(hass: HomeAssistant, entity_registry: er.EntityRegistry) ->
         (Profile.BOOST, "boost", 90),
         (Profile.FIREPLACE, "fireplace", None),
         (Profile.EXTRA, "extra", None),
-        # Automatic is not a selectable preset.
-        (Profile.AUTOMATIC, None, None),
+        # Automatic has no fan speed setting.
+        (Profile.AUTOMATIC, "auto", None),
         (None, None, None),
     ],
 )
@@ -183,6 +184,7 @@ async def test_turn_on_with_zero_percentage(
         ("boost", Profile.BOOST),
         ("fireplace", Profile.FIREPLACE),
         ("extra", Profile.EXTRA),
+        ("auto", Profile.AUTOMATIC),
     ],
 )
 async def test_set_preset_mode(
@@ -232,18 +234,26 @@ async def test_set_percentage_zero(hass: HomeAssistant, mock_device: MagicMock) 
     mock_device.async_set_home_fan_speed.assert_not_awaited()
 
 
+@pytest.mark.parametrize(
+    ("profile", "preset_mode"),
+    [(Profile.FIREPLACE, "fireplace"), (Profile.AUTOMATIC, "auto")],
+)
 async def test_set_percentage_without_speed_setting(
-    hass: HomeAssistant, init_integration: MockConfigEntry, mock_device: MagicMock
+    hass: HomeAssistant,
+    init_integration: MockConfigEntry,
+    mock_device: MagicMock,
+    profile: Profile,
+    preset_mode: str,
 ) -> None:
-    """Test the Fireplace profile has no fan speed to set."""
-    mock_device.profile = Profile.FIREPLACE
+    """Test profiles without a fan speed setting reject a percentage."""
+    mock_device.profile = profile
     await _refresh(hass, init_integration)
 
     with pytest.raises(ServiceValidationError) as exc_info:
         await _call(hass, SERVICE_SET_PERCENTAGE, percentage=70)
 
     assert exc_info.value.translation_domain == DOMAIN
-    assert exc_info.value.translation_placeholders == {"preset_mode": "fireplace"}
+    assert exc_info.value.translation_placeholders == {"preset_mode": preset_mode}
 
 
 @pytest.mark.parametrize(

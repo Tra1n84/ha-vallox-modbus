@@ -62,6 +62,7 @@
         "state_attributes": {
           "preset_mode": {
             "state": {
+              "auto": "Automatisch",
               "away": "Abwesend",
               "boost": "Boost",
               "extra": "Extra",

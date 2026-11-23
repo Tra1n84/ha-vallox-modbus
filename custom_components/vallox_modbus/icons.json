@@ -10,6 +10,7 @@
         "state_attributes": {
           "preset_mode": {
             "state": {
+              "auto": "mdi:fan-auto",
               "away": "mdi:home-export-outline",
               "boost": "mdi:fan-plus",
               "extra": "mdi:fan-clock",
