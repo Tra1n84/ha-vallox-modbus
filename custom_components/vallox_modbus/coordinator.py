@@ -38,8 +38,13 @@ class ValloxCoordinator(DataUpdateCoordinator[UpdateReport]):
         poll: Callable[[], Awaitable[UpdateReport]],
         interval: timedelta,
         label: str,
+        retry_interval: timedelta | None = None,
     ) -> None:
-        """Initialize the coordinator."""
+        """Initialize the coordinator.
+
+        After a poll in which any component failed, the next poll follows after
+        ``retry_interval`` instead of ``interval``.
+        """
         super().__init__(
             hass,
             _LOGGER,
@@ -52,11 +57,16 @@ class ValloxCoordinator(DataUpdateCoordinator[UpdateReport]):
         )
         self.device = device
         self._poll = poll
+        self._interval = interval
+        self._retry_interval = retry_interval or interval
         self._failed: frozenset[str] = frozenset()
 
     @override
     async def _async_update_data(self) -> UpdateReport:
         """Poll the components and keep partial successes."""
+        # Assume failure until the poll proves otherwise. The next refresh is
+        # scheduled from this interval after the update, even when it raises.
+        self.update_interval = self._retry_interval
         try:
             report = await self._poll()
         except ModbusError as err:
@@ -85,6 +95,8 @@ class ValloxCoordinator(DataUpdateCoordinator[UpdateReport]):
         for name in sorted(report.updated & self._failed):
             _LOGGER.info("%s is available again", name)
         self._failed = frozenset(report.failed)
+        if not report.failed:
+            self.update_interval = self._interval
         return report
 
 

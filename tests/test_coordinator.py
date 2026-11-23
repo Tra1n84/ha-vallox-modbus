@@ -14,8 +14,10 @@ from pytest_homeassistant_custom_component.common import (
 
 from custom_components.vallox_modbus.const import (
     READINGS_SCAN_INTERVAL,
+    SETTINGS_RETRY_INTERVAL,
     SETTINGS_SCAN_INTERVAL,
 )
+from homeassistant.components.fan import ATTR_PERCENTAGE
 from homeassistant.const import STATE_UNAVAILABLE
 from homeassistant.core import HomeAssistant
 
@@ -118,6 +120,52 @@ async def test_settings_poll_interval(
     mock_device.async_update_settings.return_value = settings_report()
     await _tick(hass, freezer, SETTINGS_SCAN_INTERVAL - READINGS_SCAN_INTERVAL)
     assert mock_device.async_update_settings.await_count == 1
+
+
+async def test_settings_poll_error_retries_sooner(
+    hass: HomeAssistant,
+    freezer: FrozenDateTimeFactory,
+    init_integration: MockConfigEntry,
+    mock_device: MagicMock,
+) -> None:
+    """Test failed settings are polled again before the regular interval."""
+    mock_device.async_update_settings.side_effect = ModbusTimeoutError("no answer")
+    await _tick(hass, freezer, SETTINGS_SCAN_INTERVAL)
+    assert hass.states.get("number.vallox_supply_air_temperature_home").state == (
+        STATE_UNAVAILABLE
+    )
+
+    mock_device.async_update_settings.reset_mock()
+    mock_device.async_update_settings.side_effect = None
+    await _tick(hass, freezer, SETTINGS_RETRY_INTERVAL)
+    assert mock_device.async_update_settings.await_count == 1
+    assert hass.states.get("number.vallox_supply_air_temperature_home").state == (
+        "13.0"
+    )
+
+    # After a successful poll, the regular interval applies again.
+    await _tick(hass, freezer, SETTINGS_RETRY_INTERVAL)
+    assert mock_device.async_update_settings.await_count == 1
+    await _tick(hass, freezer, SETTINGS_SCAN_INTERVAL - SETTINGS_RETRY_INTERVAL)
+    assert mock_device.async_update_settings.await_count == 2
+
+
+async def test_settings_partial_failure_retries_sooner(
+    hass: HomeAssistant,
+    freezer: FrozenDateTimeFactory,
+    init_integration: MockConfigEntry,
+    mock_device: MagicMock,
+) -> None:
+    """Test a failed settings component restores the fan percentage sooner."""
+    mock_device.async_update_settings.return_value = settings_report(
+        settings=ModbusTimeoutError("no answer")
+    )
+    await _tick(hass, freezer, SETTINGS_SCAN_INTERVAL)
+    assert hass.states.get("fan.vallox").attributes[ATTR_PERCENTAGE] is None
+
+    mock_device.async_update_settings.return_value = settings_report()
+    await _tick(hass, freezer, SETTINGS_RETRY_INTERVAL)
+    assert hass.states.get("fan.vallox").attributes[ATTR_PERCENTAGE] == 60
 
 
 async def test_coordinator_for_rejects_mixed_components(

@@ -31,6 +31,9 @@ MAX_UNIT_ID: Final = 247
 
 READINGS_SCAN_INTERVAL: Final = timedelta(seconds=60)
 SETTINGS_SCAN_INTERVAL: Final = timedelta(minutes=10)
+# Retry failed settings sooner, so a single timeout does not leave the profile
+# fan speeds unknown for a whole settings interval.
+SETTINGS_RETRY_INTERVAL: Final = timedelta(seconds=60)
 
 READINGS_COMPONENTS: Final = (
     "measurements",
