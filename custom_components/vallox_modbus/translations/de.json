@@ -108,7 +108,7 @@
         "name": "Zulufttemperatur (Extra)"
       },
       "supply_air_target_home": {
-        "name": "Zulufttemperatur (zuhause)"
+        "name": "Zulufttemperatur (Zuhause)"
       }
     },
     "sensor": {
