@@ -13,7 +13,7 @@ dev = [
     # Pins Home Assistant 2026.10.4 and its test helpers.
     "pytest-homeassistant-custom-component==0.13.375",
     # Requirement of custom_components/vallox_modbus/manifest.json.
-    "vallox-modbus==0.2.0",
+    "vallox-modbus==0.2.1",
     # Requirements of the core modbus and usb integrations in Home Assistant
     # 2026.10.4. Tests skip installing manifest requirements, so they are
     # listed here.
