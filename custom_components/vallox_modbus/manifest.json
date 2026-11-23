@@ -12,5 +12,5 @@
   "issue_tracker": "https://github.com/Tra1n84/ha-vallox-modbus/issues",
   "loggers": ["modbus_connection", "vallox_modbus"],
   "requirements": ["vallox-modbus==0.2.2"],
-  "version": "0.1.2"
+  "version": "0.1.3"
 }
