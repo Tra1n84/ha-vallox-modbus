@@ -7,7 +7,13 @@ from homeassistant.const import CONF_DEVICE, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryError, HomeAssistantError
 
-from .const import CONF_UNIT_ID, DOMAIN, READINGS_SCAN_INTERVAL, SETTINGS_SCAN_INTERVAL
+from .const import (
+    CONF_UNIT_ID,
+    DOMAIN,
+    READINGS_SCAN_INTERVAL,
+    SETTINGS_RETRY_INTERVAL,
+    SETTINGS_SCAN_INTERVAL,
+)
 from .coordinator import ValloxConfigEntry, ValloxCoordinator, ValloxRuntimeData
 from .helpers import async_find_yaml_hub, create_modbus_params
 
@@ -55,6 +61,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ValloxConfigEntry) -> bo
         device.async_update_settings,
         SETTINGS_SCAN_INTERVAL,
         "settings",
+        SETTINGS_RETRY_INTERVAL,
     )
     entry.runtime_data = ValloxRuntimeData(device, readings, settings)
 

@@ -123,7 +123,8 @@ hardware.
 The integration polls the unit:
 
 - measurements, profile, timers and inputs every 60 seconds,
-- profile settings and configuration every 10 minutes.
+- profile settings and configuration every 10 minutes, or after 60 seconds if
+  the previous poll failed.
 
 After a change from Home Assistant, the affected values are read again right
 away. Changes made on the control panel appear with the next poll. If some
