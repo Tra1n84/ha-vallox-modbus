@@ -99,7 +99,7 @@ To change the settings later, open the entry and choose **Reconfigure**.
 
 | Platform | Entities |
 | --- | --- |
-| Fan | Ventilation: on/off, profile speed in percent, presets Home, Away, Boost, Fireplace, Auto; shows Extra while it is active |
+| Fan | Ventilation: on/off, profile speed in percent, presets Home, Away, Boost, Fireplace, Extra, Auto |
 | Sensor | Extract, exhaust, outdoor, supply and supply cell air temperature; humidity; current profile; fan speed; cell state; profile duration; remaining time for filter; filter time remaining |
 | Sensor (disabled by default) | Optional air temperature, CO2, extract and supply fan speed in RPM |
 | Binary sensor | Defrosting, Fault |
@@ -127,13 +127,13 @@ registers fail to answer, only the affected entities become unavailable.
 
 ## Known limitations
 
-- **Extra cannot be selected.** Selecting a preset writes several registers
-  in a row (profile and timers). This is validated on hardware for Home, Away,
-  Boost, Fireplace and Auto, including changes between Boost and Fireplace.
-  On the tested unit, the Extra timer accepted the write but the unit did not
-  change the mode, so the Extra preset is not offered. The fan still shows
-  Extra while it is active. If a write fails halfway, Home Assistant reports
-  an error and reads the state again.
+- **Preset changes are not atomic.** Selecting a preset writes several
+  registers in a row (profile and timers); this is validated on hardware for
+  every preset. If a write fails halfway, Home Assistant reports an error and
+  reads the state again.
+- **Extra on the control panel.** Extra is the unit's programmable input
+  mode. While it is active, the MyVallox Control panel keeps showing the
+  previous mode with an additional symbol, while the fan shows Extra.
 - **No fan speed in Auto, Fireplace and Extra.** These profiles have no single
   fan speed setting (Fireplace and Extra set supply and extract air
   separately), so, as in the core integration, the fan shows no percentage and
