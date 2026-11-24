@@ -133,19 +133,27 @@ registers fail to answer, only the affected entities become unavailable.
 ## Known limitations
 
 - **Presets are experimental.** Selecting a preset writes several registers
-  in a row (profile, timers and, for timed profiles, the timer switch). This
-  sequence is implemented according to the Vallox Modbus manual but not yet
-  validated on hardware. If a write fails halfway, Home Assistant reports an
-  error and reads the state again. The Auto preset is validated on hardware.
-- **No fan speed in Auto.** The Automatic profile has no fan speed setting, so
-  the fan shows no percentage and rejects setting one while Auto is active. The
-  *Fan speed* sensor shows the actual speed.
+  in a row (profile and timers). This sequence is implemented according to the
+  Vallox Modbus manual but not yet validated on hardware. If a write fails
+  halfway, Home Assistant reports an error and reads the state again. The Auto
+  preset is validated on hardware.
+- **No fan speed in Auto, Fireplace and Extra.** These profiles have no single
+  fan speed setting (Fireplace and Extra set supply and extract air
+  separately), so, as in the core integration, the fan shows no percentage and
+  rejects setting one while they are active. The *Fan speed* sensor shows the
+  actual speed.
+- **Profile duration needs the profile's timer.** Boost, Fireplace and Extra
+  run for their configured duration only while the profile's timer function is
+  on. For Boost and Fireplace, the MyVallox Control panel shows it as the
+  first screen of the mode settings (Info, then the pen icon); Fireplace is
+  called Custom mode there. While the timer function is off, the profile runs
+  until the mode is changed and *Profile duration* is unknown.
 - **Not available over Modbus**, compared with the core integration: the
   extract efficiency sensor, the post-heater binary sensor, the bypass lock
   switch, a writable filter change date, the profile actions, and device
   model, software version and serial number.
-- The filter change date and the timer switches are read but not yet
-  validated on hardware.
+- The filter change date and the Boost and Extra timer switches are read but
+  not yet validated on hardware.
 
 ## Troubleshooting
 
