@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Python dependencies are pinned to match one Home Assistant release and are
+  # updated together with it, so only the workflow actions are watched.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
