@@ -88,9 +88,8 @@ class ValloxFanEntity(ValloxEntity, FanEntity):
     @property
     @override
     def preset_mode(self) -> str | None:
-        """Return the active profile, if it is a selectable preset."""
-        preset = PROFILE_TO_PRESET_MODE.get(self.device.profile)
-        return preset if preset in PRESET_MODE_TO_PROFILE else None
+        """Return the active profile as a preset."""
+        return PROFILE_TO_PRESET_MODE.get(self.device.profile)
 
     @property
     @override

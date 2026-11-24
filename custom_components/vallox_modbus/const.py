@@ -56,7 +56,7 @@ PRESET_MODE_TO_PROFILE: Final = {
     "auto": Profile.AUTOMATIC,
 }
 
-# Every profile the unit can report, named as in the core vallox integration.
+# Every profile is selectable, so the reverse lookup covers them all.
 PROFILE_TO_PRESET_MODE: Final = {
     profile: preset for preset, profile in PRESET_MODE_TO_PROFILE.items()
 }

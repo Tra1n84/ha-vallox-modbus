@@ -6,7 +6,8 @@ How the entities of this integration relate to the core `vallox` integration
 
 Assessed on 2026-11-22 against core `vallox` on `dev`, `vallox_websocket_api`
 7.0.0 data models 2.0.16 and 2.0.22, the Vallox Modbus manual D5269
-(20.04.2020) and `vallox-modbus` 0.2.0.
+(20.04.2020) and `vallox-modbus` 0.2.0. `vallox-modbus` 0.2.2 reads and
+writes the same registers.
 
 ## Identity
 
@@ -33,7 +34,7 @@ deviations.
 | --- | --- | --- |
 | Temperatures | centi-Kelvin, read values rounded to 0.1 °C | centi-Kelvin, 0.01 °C; shown with one decimal |
 | `A_CYC_RH_VALUE`, `A_CYC_CO2_VALUE` | 0 reported as 0 | 0 reported as unknown (no sensor) |
-| `A_CYC_STATE` 4609 | 0 Home, 1 Away, 2 Auto | manual documents 0..1 only; 2 not validated |
+| `A_CYC_STATE` 4609 | 0 Home, 1 Away, 2 Auto | 0 Home, 1 Away, 2 Automatic; 2 validated on hardware |
 | `A_CYC_MODE` 4610 | on unless 5 | 0 normal, 5 off; other values unknown |
 | Profile priority | Extra > Fireplace > Boost > basic | same, as documented in the manual |
 | Profile enum | `Profile.HOME = 1` ... | `Profile.HOME = 0` ...; translate by meaning |
@@ -48,7 +49,7 @@ not validated on hardware · ⛔ not available
 | fan `ventilation` on/off | `MODE` | 4610 | `runtime.system_mode`, `async_set_power` | fan | ✅ |
 | fan preset (read) | `STATE`, `*_TIMER` | 4609, 4612–4614 | `profile` | fan | 🟡 |
 | fan preset home, away, boost, fireplace, extra | `STATE`, `*_TIMER`, `*_TIME`, `*_TIMER_ENABLED` | 4609, 4612–4614, 20544, 20545, 20496, 21766, 21767, 21772 | `async_set_profile` | fan | ⚠️ experimental |
-| fan preset auto | `STATE` = 2 | 4609 | `Profile.AUTOMATIC` | not selectable; shown by `current_profile` | ⛔ |
+| fan preset auto | `STATE` = 2, `*_TIMER` = 0 | 4609, 4612–4614 | `async_set_profile(Profile.AUTOMATIC)` | fan | ✅ |
 | fan percentage, attributes `fan_speed_*` | `*_SPEED_SETTING` | 20501, 20507, 20513 | `settings.*_fan_speed`, `async_set_*_fan_speed` | fan | ✅ |
 | sensor `extract_air` | `TEMP_EXTRACT_AIR` | 4354 | `measurements.extract_air_temperature` | sensor | 🟡 |
 | sensor `exhaust_air` | `TEMP_EXHAUST_AIR` | 4355 | `measurements.exhaust_air_temperature` | sensor | 🟡 |
