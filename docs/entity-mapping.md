@@ -48,7 +48,8 @@ not validated on hardware · ⛔ not available
 | --- | --- | --- | --- | --- | --- |
 | fan `ventilation` on/off | `MODE` | 4610 | `runtime.system_mode`, `async_set_power` | fan | ✅ |
 | fan preset (read) | `STATE`, `*_TIMER` | 4609, 4612–4614 | `profile` | fan | 🟡 |
-| fan preset home, away, boost, fireplace, extra | `STATE`, `*_TIMER`, `*_TIME`, `*_TIMER_ENABLED` | 4609, 4612–4614, 20544, 20545, 20496, 21766, 21767, 21772 | `async_set_profile` | fan | ⚠️ experimental |
+| fan preset home, away, boost, fireplace | `STATE`, `*_TIMER`, `*_TIME` | 4609, 4612–4614, 20544, 20545 | `async_set_profile` | fan | ✅ |
+| fan preset extra | `EXTRA_TIMER`, `EXTRA_TIME` | 4614, 20496 | `async_set_profile(Profile.EXTRA)` | not selectable; shown while active | ⚠️ unit kept its mode |
 | fan preset auto | `STATE` = 2, `*_TIMER` = 0 | 4609, 4612–4614 | `async_set_profile(Profile.AUTOMATIC)` | fan | ✅ |
 | fan percentage, attributes `fan_speed_*` | `*_SPEED_SETTING` | 20501, 20507, 20513 | `settings.*_fan_speed`, `async_set_*_fan_speed` | fan | ✅ |
 | sensor `extract_air` | `TEMP_EXTRACT_AIR` | 4354 | `measurements.extract_air_temperature` | sensor | 🟡 |
@@ -92,8 +93,9 @@ VOC sensor arrays, raw input values) are only included in the diagnostics.
 
 ## Open library work
 
-- Hardware validation of `async_set_profile`, the timer switch writes, and the
-  timer switch and filter change date reads.
+- Hardware validation of `async_set_profile` for Extra and with an explicit
+  duration, the timer switch writes, the Boost and Extra timer switch reads,
+  and the filter change date reads.
 - Filter change date write, for the core `filter_change_date` date entity.
 - Bypass lock write validation, for the core `bypass_locked` switch.
 - A hardware read test of the undocumented identity, efficiency (32776) and

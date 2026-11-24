@@ -11,11 +11,6 @@ integration is for installations that use the unit's RS485 Modbus line
 instead. Its entity names, keys and units follow the core integration, so
 entity IDs such as `fan.vallox` and `sensor.vallox_extract_air` stay the same.
 
-> [!WARNING]
-> **Experimental:** switching fan presets (Home, Away, Boost, Fireplace, Extra)
-> uses a multi-register write sequence that has not yet been validated on
-> hardware. See [Known limitations](#known-limitations).
-
 ## Requirements
 
 - Home Assistant 2026.10.0 or newer.
@@ -104,7 +99,7 @@ To change the settings later, open the entry and choose **Reconfigure**.
 
 | Platform | Entities |
 | --- | --- |
-| Fan | Ventilation: on/off, profile speed in percent, presets Home, Away, Boost, Fireplace, Extra, Auto |
+| Fan | Ventilation: on/off, profile speed in percent, presets Home, Away, Boost, Fireplace, Auto; shows Extra while it is active |
 | Sensor | Extract, exhaust, outdoor, supply and supply cell air temperature; humidity; current profile; fan speed; cell state; profile duration; remaining time for filter; filter time remaining |
 | Sensor (disabled by default) | Optional air temperature, CO2, extract and supply fan speed in RPM |
 | Binary sensor | Defrosting, Fault |
@@ -132,11 +127,13 @@ registers fail to answer, only the affected entities become unavailable.
 
 ## Known limitations
 
-- **Presets are experimental.** Selecting a preset writes several registers
-  in a row (profile and timers). This sequence is implemented according to the
-  Vallox Modbus manual but not yet validated on hardware. If a write fails
-  halfway, Home Assistant reports an error and reads the state again. The Auto
-  preset is validated on hardware.
+- **Extra cannot be selected.** Selecting a preset writes several registers
+  in a row (profile and timers). This is validated on hardware for Home, Away,
+  Boost, Fireplace and Auto, including changes between Boost and Fireplace.
+  On the tested unit, the Extra timer accepted the write but the unit did not
+  change the mode, so the Extra preset is not offered. The fan still shows
+  Extra while it is active. If a write fails halfway, Home Assistant reports
+  an error and reads the state again.
 - **No fan speed in Auto, Fireplace and Extra.** These profiles have no single
   fan speed setting (Fireplace and Extra set supply and extract air
   separately), so, as in the core integration, the fan shows no percentage and

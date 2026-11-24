@@ -20,6 +20,7 @@ from homeassistant.components.fan import (
     DOMAIN as FAN_DOMAIN,
     SERVICE_SET_PERCENTAGE,
     SERVICE_SET_PRESET_MODE,
+    NotValidPresetModeError,
 )
 from homeassistant.const import (
     ATTR_ENTITY_ID,
@@ -58,12 +59,12 @@ async def test_state(hass: HomeAssistant, entity_registry: er.EntityRegistry) ->
     state = hass.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_PRESET_MODE] == "home"
+    # Extra is shown, but its profile change is not validated on hardware.
     assert state.attributes[ATTR_PRESET_MODES] == [
         "home",
         "away",
         "boost",
         "fireplace",
-        "extra",
         "auto",
     ]
     assert state.attributes[ATTR_PERCENTAGE] == 60
@@ -168,6 +169,17 @@ async def test_turn_on_with_preset_without_speed(
     mock_device.async_set_power.assert_not_awaited()
 
 
+async def test_turn_on_with_extra_preset(
+    hass: HomeAssistant, mock_device: MagicMock
+) -> None:
+    """Test the Extra preset is rejected before anything is written."""
+    with pytest.raises(NotValidPresetModeError):
+        await _call(hass, SERVICE_TURN_ON, preset_mode="extra")
+
+    writes = [c for c in mock_device.mock_calls if c[0].startswith("async_set_")]
+    assert writes == []
+
+
 async def test_turn_on_with_zero_percentage(
     hass: HomeAssistant, mock_device: MagicMock
 ) -> None:
@@ -183,7 +195,6 @@ async def test_turn_on_with_zero_percentage(
         ("away", Profile.AWAY),
         ("boost", Profile.BOOST),
         ("fireplace", Profile.FIREPLACE),
-        ("extra", Profile.EXTRA),
         ("auto", Profile.AUTOMATIC),
     ],
 )
@@ -199,6 +210,16 @@ async def test_set_preset_mode(
 
     mock_device.async_set_profile.assert_awaited_once_with(profile)
     mock_device.async_update_readings.assert_awaited()
+
+
+async def test_set_extra_preset_mode(
+    hass: HomeAssistant, mock_device: MagicMock
+) -> None:
+    """Test the Extra preset is not written, because it is not validated."""
+    with pytest.raises(NotValidPresetModeError):
+        await _call(hass, SERVICE_SET_PRESET_MODE, preset_mode="extra")
+
+    mock_device.async_set_profile.assert_not_awaited()
 
 
 @pytest.mark.parametrize(
