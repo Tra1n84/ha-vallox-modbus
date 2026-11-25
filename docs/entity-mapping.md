@@ -93,8 +93,7 @@ VOC sensor arrays, raw input values) are only included in the diagnostics.
 ## Open library work
 
 - Hardware validation of `async_set_profile` with an explicit duration, the
-  timer switch writes, the Boost and Extra timer switch reads and the filter
-  change date reads.
+  timer switch writes and the filter change date reads.
 - Filter change date write, for the core `filter_change_date` date entity.
 - Bypass lock write validation, for the core `bypass_locked` switch.
 - A hardware read test of the undocumented identity, efficiency (32776) and
