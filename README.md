@@ -149,8 +149,7 @@ registers fail to answer, only the affected entities become unavailable.
   extract efficiency sensor, the post-heater binary sensor, the bypass lock
   switch, a writable filter change date, the profile actions, and device
   model, software version and serial number.
-- The filter change date and the Boost and Extra timer switches are read but
-  not yet validated on hardware.
+- The filter change date is read but not yet validated on hardware.
 
 ## Troubleshooting
 
