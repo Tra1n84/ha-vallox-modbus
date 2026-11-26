@@ -6,7 +6,7 @@ How the entities of this integration relate to the core `vallox` integration
 
 Assessed on 2026-11-22 against core `vallox` on `dev`, `vallox_websocket_api`
 7.0.0 data models 2.0.16 and 2.0.22, the Vallox Modbus manual D5269
-(20.04.2020) and `vallox-modbus` 0.2.0. `vallox-modbus` 0.2.2 reads and
+(20.04.2020) and `vallox-modbus` 0.2.0. `vallox-modbus` 0.2.3 reads and
 writes the same registers.
 
 ## Identity
@@ -118,7 +118,7 @@ Core entities and actions without a counterpart in this integration:
 | Core entity | `A_CYC_*` | Register | `vallox-modbus` | Status |
 | --- | --- | --- | --- | --- |
 | switch `bypass_locked` | `BYPASS_LOCKED` | 20552 | `async_set_bypass_locked` | ⛔ write not validated, left out in v1 |
-| date `filter_change_date` | `FILTER_CHANGED_*` | 20546–20548 | no write in 0.2.2 | ⛔ |
+| date `filter_change_date` | `FILTER_CHANGED_*` | 20546–20548 | no write in 0.2.3 | ⛔ |
 | actions `set_profile_fan_speed_*`, `set_profile` | — | — | setters, `async_set_profile` | ⛔ not in v1 |
 
 The remaining registers (Modbus and installation configuration, RH, CO2 and
@@ -134,8 +134,5 @@ VOC sensor arrays, raw input values) are only included in the diagnostics.
 - Bypass lock write validation, for the core `bypass_locked` switch.
 - Hardware validation of the Boost preset while the unit is defrosting. The
   control panel does not start Boost then.
-- Release of the request timing validated on hardware (1 second timeout,
-  500 ms between requests, up to 5 resends), which shortens updates with
-  unanswered requests.
 - A hardware read test of the undocumented identity, efficiency (32776) and
   post-heater (4868) registers.

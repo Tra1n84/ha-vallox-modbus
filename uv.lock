@@ -1148,7 +1148,7 @@ wheels = [
 
 [[package]]
 name = "ha-vallox-modbus"
-version = "0.1.4"
+version = "0.2.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]
@@ -1174,7 +1174,7 @@ dev = [
     { name = "ruff", specifier = ">=0.15" },
     { name = "serialx", specifier = "==1.11.0" },
     { name = "tmodbus", specifier = "==0.6.2" },
-    { name = "vallox-modbus", specifier = "==0.2.2" },
+    { name = "vallox-modbus", specifier = "==0.2.3" },
 ]
 
 [[package]]
@@ -3204,14 +3204,14 @@ wheels = [
 
 [[package]]
 name = "vallox-modbus"
-version = "0.2.2"
+version = "0.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "modbus-connection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/ee/f8492a657f4c335dc5f2b866da5f298dc2996511c6379e80c7f2d7200892/vallox_modbus-0.2.2.tar.gz", hash = "sha256:3857fc2c12e9b6adf0f42c5767193ab5baacd2a79963f7e73b20ea004ca0bb95", size = 36891, upload-time = "2026-11-23T11:00:05.837Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6e/ee/888f3b42052b96215b7233b32f9b2d0637c5370454123cad55d9bd568d35/vallox_modbus-0.2.3.tar.gz", hash = "sha256:5594cbe89908a337dfe466e41fc3a518f141068bb4b4a160f9fd44394e5801f9", size = 40591, upload-time = "2026-11-26T13:13:28.361Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0c/0a/21c0a52fb8c3386934d7113fff363b1bf9d93867a0b6f2d9b110654d8177/vallox_modbus-0.2.2-py3-none-any.whl", hash = "sha256:c23b9ecab2b98f4833af3101fa2e51ac49e6067892524902778f0b1435ca659f", size = 20116, upload-time = "2026-11-23T11:00:04.832Z" },
+    { url = "https://files.pythonhosted.org/packages/f4/48/4db5e57647fa540a19df3ee34a7a1ca1ed9f9f8c6cb6cd0e8f84444051ad/vallox_modbus-0.2.3-py3-none-any.whl", hash = "sha256:8bf23c04b8f4e8143ecc6e720f52cd5a092e6dac5130a2b7aecbd43dbbe4f011", size = 20444, upload-time = "2026-11-26T13:13:27.323Z" },
 ]
 
 [[package]]
