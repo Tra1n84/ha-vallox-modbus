@@ -46,7 +46,7 @@ partly validated on hardware · ⛔ not available
 
 The status covers reads and, where the entity writes, writes. Sensor and
 binary sensor entities only read. The validation status follows
-`vallox-modbus/docs/hardware-validation.md` as of 2026-11-25.
+`vallox-modbus/docs/hardware-validation.md` as of 2026-11-26.
 
 The tables are grouped by platform and use the `A_CYC_*` names without the
 prefix. *Not in core* marks entities without a counterpart in the core
@@ -81,9 +81,9 @@ The core `ventilation` fan maps to the single fan entity.
 | `fan_speed` | `FAN_SPEED`<br>`MODE` | 4353<br>4610 | `measurements.fan_speed` | ✅ |
 | `extract_fan_speed`<br>disabled | `EXTR_FAN_SPEED` | 4361 | `measurements.extract_fan_rpm` | ✅ |
 | `supply_fan_speed`<br>disabled | `SUPP_FAN_SPEED` | 4362 | `measurements.supply_fan_rpm` | ✅ |
-| `remaining_time_for_filter` | `FILTER_CHANGED_*`<br>`FILTER_CHANGE_INTERVAL` | 20546–20548<br>20537 | `next_filter_change_date` | ⚠️ date read not validated |
+| `remaining_time_for_filter` | `FILTER_CHANGED_*`<br>`FILTER_CHANGE_INTERVAL` | 20546–20548<br>20537 | `next_filter_change_date` | ✅ |
 | `cell_state` | `CELL_STATE` | 4616 | `runtime.heat_exchanger_state` | ✅ |
-| `profile_duration` | `*_TIMER`<br>`*_TIMER_ENABLED` | 4612–4614<br>21766, 21767, 21772 | `remaining_profile_duration` | ⚠️ off state of 21766, 21772 not observed |
+| `profile_duration` | `*_TIMER`<br>`*_TIMER_ENABLED` | 4612–4614<br>21766, 21767, 21772 | `remaining_profile_duration` | ⚠️ off state of 21772 not observed |
 | `filter_remaining`<br>not in core | `REMAINING_TIME_FOR_FILTER` | 4620 | `runtime.filter_remaining` | ✅ |
 
 ### Binary sensor
@@ -126,12 +126,16 @@ VOC sensor arrays, raw input values) are only included in the diagnostics.
 
 ## Open library work
 
-- Hardware validation of the filter change date reads and of the timer switch
-  reads of 21766 and 21772 in the off state.
+- Hardware validation of the timer switch read of 21772 in the off state.
 - Hardware validation of `async_set_profile` with an explicit duration and of
   the timer switch writes. The fan presets do not use them.
 - Filter change date write, for the core `filter_change_date` date entity:
   implemented in the library but not yet released or validated on hardware.
 - Bypass lock write validation, for the core `bypass_locked` switch.
+- Hardware validation of the Boost preset while the unit is defrosting. The
+  control panel does not start Boost then.
+- Release of the request timing validated on hardware (1 second timeout,
+  500 ms between requests, up to 5 resends), which shortens updates with
+  unanswered requests.
 - A hardware read test of the undocumented identity, efficiency (32776) and
   post-heater (4868) registers.

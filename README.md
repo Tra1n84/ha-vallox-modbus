@@ -133,7 +133,8 @@ registers fail to answer, only the affected entities become unavailable.
   reads the state again.
 - **Extra on the control panel.** Extra is the unit's programmable input
   mode. While it is active, the MyVallox Control panel keeps showing the
-  previous mode with an additional symbol, while the fan shows Extra.
+  previous mode with an additional symbol, while the fan shows Extra. The panel
+  can neither select Extra nor switch its timer function.
 - **No fan speed in Auto, Fireplace and Extra.** These profiles have no single
   fan speed setting (Fireplace and Extra set supply and extract air
   separately), so, as in the core integration, the fan shows no percentage and
@@ -149,7 +150,6 @@ registers fail to answer, only the affected entities become unavailable.
   extract efficiency sensor, the post-heater binary sensor, the bypass lock
   switch, a writable filter change date, the profile actions, and device
   model, software version and serial number.
-- The filter change date is read but not yet validated on hardware.
 
 ## Troubleshooting
 
@@ -165,6 +165,10 @@ registers fail to answer, only the affected entities become unavailable.
   masters on one port interfere with each other. The integration therefore
   refuses that port. Comment out the hub, restart Home Assistant and add or
   reload the entry. To go back to YAML, delete the entry first.
+- **Slow updates**: the unit can leave single requests unanswered. The
+  integration resends them, which delays the update but keeps the entities
+  available. Set the `vallox_modbus.retry` logger to `debug` to see each
+  resent request.
 - For details, enable debug logging for the integration and download the
   diagnostics of the entry. Diagnostics contain the raw register values but
   not the serial port path.
