@@ -62,12 +62,20 @@ The connection always uses 8 data bits.
 
 ## Installation
 
-### HACS
+Vallox Modbus is available in the Home Assistant Marketplace, which replaces
+HACS from Home Assistant 2026.11 on. This is the recommended installation.
 
-1. In HACS, open the menu and choose **Custom repositories**.
-2. Add `https://github.com/Tra1n84/ha-vallox-modbus` with the type
-   **Integration**.
-3. Install **Vallox Modbus** and restart Home Assistant.
+### Marketplace (Home Assistant 2026.11 and newer)
+
+1. Go to **Settings → Marketplace**.
+2. Search for **Vallox Modbus** and select it.
+3. Select **Install** and confirm with **Install**.
+4. The setup opens right away; continue with [Configuration](#configuration).
+
+### HACS (Home Assistant 2026.10)
+
+1. Open **HACS** and search for **Vallox Modbus**.
+2. Select **Download** and restart Home Assistant.
 
 ### Manual
 
@@ -177,8 +185,9 @@ registers fail to answer, only the affected entities become unavailable.
 
 1. Go to **Settings → Devices & services → Vallox Modbus**.
 2. Open the entry menu and choose **Delete**.
-3. To remove the files as well, uninstall the integration in HACS, or delete
-   `custom_components/vallox_modbus`, and restart Home Assistant.
+3. To remove the files as well, remove Vallox Modbus in the Marketplace or in
+   HACS, or delete `custom_components/vallox_modbus` and restart Home
+   Assistant.
 
 ## Development
 
