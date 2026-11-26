@@ -62,12 +62,20 @@ The connection always uses 8 data bits.
 
 ## Installation
 
-### HACS
+Vallox Modbus is available in the Home Assistant Marketplace, which replaces
+HACS from Home Assistant 2026.11 on. This is the recommended installation.
 
-1. In HACS, open the menu and choose **Custom repositories**.
-2. Add `https://github.com/Tra1n84/ha-vallox-modbus` with the type
-   **Integration**.
-3. Install **Vallox Modbus** and restart Home Assistant.
+### Marketplace (Home Assistant 2026.11 and newer)
+
+1. Go to **Settings → Marketplace**.
+2. Search for **Vallox Modbus** and select it.
+3. Select **Install** and confirm with **Install**.
+4. The setup opens right away; continue with [Configuration](#configuration).
+
+### HACS (Home Assistant 2026.10)
+
+1. Open **HACS** and search for **Vallox Modbus**.
+2. Select **Download** and restart Home Assistant.
 
 ### Manual
 
@@ -133,7 +141,8 @@ registers fail to answer, only the affected entities become unavailable.
   reads the state again.
 - **Extra on the control panel.** Extra is the unit's programmable input
   mode. While it is active, the MyVallox Control panel keeps showing the
-  previous mode with an additional symbol, while the fan shows Extra.
+  previous mode with an additional symbol, while the fan shows Extra. The panel
+  can neither select Extra nor switch its timer function.
 - **No fan speed in Auto, Fireplace and Extra.** These profiles have no single
   fan speed setting (Fireplace and Extra set supply and extract air
   separately), so, as in the core integration, the fan shows no percentage and
@@ -149,7 +158,6 @@ registers fail to answer, only the affected entities become unavailable.
   extract efficiency sensor, the post-heater binary sensor, the bypass lock
   switch, a writable filter change date, the profile actions, and device
   model, software version and serial number.
-- The filter change date is read but not yet validated on hardware.
 
 ## Troubleshooting
 
@@ -165,6 +173,10 @@ registers fail to answer, only the affected entities become unavailable.
   masters on one port interfere with each other. The integration therefore
   refuses that port. Comment out the hub, restart Home Assistant and add or
   reload the entry. To go back to YAML, delete the entry first.
+- **Slow updates**: the unit can leave single requests unanswered. The
+  integration resends them, which delays the update but keeps the entities
+  available. Set the `vallox_modbus.retry` logger to `debug` to see each
+  resent request.
 - For details, enable debug logging for the integration and download the
   diagnostics of the entry. Diagnostics contain the raw register values but
   not the serial port path.
@@ -173,8 +185,9 @@ registers fail to answer, only the affected entities become unavailable.
 
 1. Go to **Settings → Devices & services → Vallox Modbus**.
 2. Open the entry menu and choose **Delete**.
-3. To remove the files as well, uninstall the integration in HACS, or delete
-   `custom_components/vallox_modbus`, and restart Home Assistant.
+3. To remove the files as well, remove Vallox Modbus in the Marketplace or in
+   HACS, or delete `custom_components/vallox_modbus` and restart Home
+   Assistant.
 
 ## Development
 
